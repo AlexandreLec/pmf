@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.List;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.IOException;
@@ -52,9 +51,9 @@ public class Connector implements SerialPortEventListener {
     /**
      * Search the availables ports
      */
-    public List<String> searchForPort(){
-        
-    	List<String> portsAvailable = new ArrayList<String>();
+    public ArrayList<String> searchForPort(){
+
+    	ArrayList<String> portsAvailable = new ArrayList<String>();
     	
     	this.enumComm = CommPortIdentifier.getPortIdentifiers();
         while (enumComm.hasMoreElements()) {
@@ -63,12 +62,14 @@ public class Connector implements SerialPortEventListener {
                 portMap.put(curentPortID.getName(), curentPortID);
                 portsAvailable.add(curentPortID.getName());
             }
+            System.out.println("test");
         }
         
         return portsAvailable;
     }
     
     public void searchPort(){
+    	
         this.enumComm = CommPortIdentifier.getPortIdentifiers();
         while (enumComm.hasMoreElements()) {
             curentPortID = (CommPortIdentifier) enumComm.nextElement();
@@ -86,7 +87,6 @@ public class Connector implements SerialPortEventListener {
     public void connect(String port){
 
         CommPort commPort = null;
-
         try
         {
             this.curentPortID = (CommPortIdentifier) this.portMap.get(port);

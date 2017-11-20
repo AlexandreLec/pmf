@@ -1,5 +1,7 @@
 package org.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 
 import org.contract.*;
@@ -68,6 +70,11 @@ public class Model extends Observable implements Imodel {
 	
 	public boolean getConnected(){
 		return this.connector.getConnected();
+	}
+
+	public ArrayList<String> getPortAvailable() {
+		
+		return this.connector.searchForPort();
 	}
 	
 }
