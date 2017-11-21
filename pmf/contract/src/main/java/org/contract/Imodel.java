@@ -1,5 +1,7 @@
 package org.contract;
 
+import java.util.ArrayList;
+
 public interface Imodel {
 	
 	public boolean connect(String port);
@@ -17,4 +19,6 @@ public interface Imodel {
 	public String getLog();
 	
 	public boolean getConnected();
+	
+	public ArrayList<String> getPortAvailable();
 }
