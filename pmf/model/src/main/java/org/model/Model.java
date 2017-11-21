@@ -8,6 +8,9 @@ import org.contract.*;
 public class Model extends Observable implements Imodel {
 	
 	private Connector connector;
+	
+	public double temperatureAmbiante;
+	public double humiditeRelative;
 
 	public Model(){
 		
@@ -81,4 +84,15 @@ public class Model extends Observable implements Imodel {
 		return this.connector.searchForPort();
 	}
 	
+	public double calculRosee(){
+		
+		double pointDeRosee;
+		double K;
+		
+		K = (237 * temperatureAmbiante) / 17.7 + temperatureAmbiante + Math.log(humiditeRelative);
+		pointDeRosee = (237.37 * K) / (17.7 - K);
+		return pointDeRosee;
+	}
+	
 }
+	
