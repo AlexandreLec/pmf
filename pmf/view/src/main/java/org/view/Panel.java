@@ -71,6 +71,10 @@ public class Panel extends JPanel implements ActionListener, Observer {
 		
 	}
 	
+	public void repaint(){
+		
+	}
+	
 	private void buildComSelector(ArrayList<String> portAvailable){
 		
 		for(int i = 0; i < portAvailable.size(); i++){

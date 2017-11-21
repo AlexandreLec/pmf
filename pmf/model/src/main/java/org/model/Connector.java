@@ -62,7 +62,6 @@ public class Connector implements SerialPortEventListener {
                 portMap.put(curentPortID.getName(), curentPortID);
                 portsAvailable.add(curentPortID.getName());
             }
-            System.out.println("test");
         }
         
         return portsAvailable;
@@ -100,7 +99,7 @@ public class Connector implements SerialPortEventListener {
         catch (PortInUseException e)
         {
             Date date = new Date();
-            this.setTextLog(this.getTextLog() + date.toString()+": Connection timeout");
+            this.setTextLog(this.getTextLog() + date.toString()+": Connection timeout\n");
         }
     }
 
@@ -141,7 +140,7 @@ public class Connector implements SerialPortEventListener {
         catch (TooManyListenersException e)
         {
             Date date = new Date();
-            this.setTextLog(this.getTextLog() + date.toString()+"Too many listeners. (" + e.toString() +")");
+            this.setTextLog(this.getTextLog() + date.toString()+"Too many listeners. (" + e.toString() +")\n");
         }
     }
 
@@ -165,7 +164,7 @@ public class Connector implements SerialPortEventListener {
         {
             Date date = new Date();
             this.setTextLog(this.getTextLog() + date.toString()+"Failed to close " + serialPort.getName()
-                    + "(" + e.toString() + ")");
+                    + "(" + e.toString() + ")\n");
         }
     }
 
@@ -187,7 +186,7 @@ public class Connector implements SerialPortEventListener {
         catch (Exception e)
         {
             Date date = new Date();
-            this.setTextLog(this.getTextLog() + date.toString()+"Failed to write data. (" + e.toString() + ")");
+            this.setTextLog(this.getTextLog() + date.toString()+"Failed to write data. (" + e.toString() + ")\n");
         }
     }
 
@@ -216,7 +215,7 @@ public class Connector implements SerialPortEventListener {
             catch (Exception e)
             {
                 Date date = new Date();
-                this.setTextLog(this.getTextLog() + date.toString()+"Failed to read data. (" + e.toString() + ")");
+                this.setTextLog(this.getTextLog() + date.toString()+"Failed to read data. (" + e.toString() + ")\n");
             }
         }
     }
