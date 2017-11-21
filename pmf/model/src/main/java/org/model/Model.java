@@ -70,4 +70,17 @@ public class Model extends Observable implements Imodel {
 		return this.connector.getConnected();
 	}
 	
+	public double pointDeRosee;
+	public double K;
+	public double temperatureAmbiante;
+	public double humiditeRelative;
+	
+	public double calculRosee(){
+		
+		K = (237 * temperatureAmbiante) / 17.7 + temperatureAmbiante + Math.log(humiditeRelative);
+		pointDeRosee = (237.37 * K) / (17.7 - K);
+		return pointDeRosee;
+	}
+	
 }
+	
