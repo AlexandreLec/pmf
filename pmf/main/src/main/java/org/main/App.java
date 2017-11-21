@@ -17,5 +17,6 @@ public class App
         FridgeControl controller = new FridgeControl(model);
         
         FridgeView view = new FridgeView(model, controller);
+    	
     }
 }
