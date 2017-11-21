@@ -10,7 +10,7 @@ public interface Imodel {
 	
 	public int getTemperature();
 	
-	public void setTemperature();
+	public void setTemperature(int temperature);
 	
 	public void onLED();
 	

@@ -17,7 +17,6 @@ import org.contract.Imodel;
 public class Panel extends JPanel implements ActionListener, Observer {
 	private static final long serialVersionUID = 1L;
 	
-	Port port = new Port(Color.blue);
 	Valeurs valeurs = new Valeurs();
 	
 	private Imodel model;
@@ -32,15 +31,19 @@ public class Panel extends JPanel implements ActionListener, Observer {
 	private int number=18;		
 
 	public Panel(Imodel model, Icontroller controller){
+		
+		this.model = model;
+		this.controller = controller;	
+		
 		this.setLayout(null);
+		
+		Port port = new Port(Color.blue,this.model.getPortAvailable());
 		
 		this.add(port);
 		this.add(valeurs);
 		
 		this.setBackground(new Color(77,116,185));
 		this.setBounds(0,0,800,600);
-		this.model = model;
-		this.controller = controller;	
 		
         this.moins.addActionListener(this);
         this.moins.setBounds(50,200,50,50);
@@ -71,7 +74,7 @@ public class Panel extends JPanel implements ActionListener, Observer {
 		// TODO Auto-generated method stub
 		
 	}
-	
+		
 	public void diminuer(){
 		number--;
 		this.remove(txt);

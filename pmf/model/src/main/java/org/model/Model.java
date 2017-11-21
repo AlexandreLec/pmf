@@ -1,7 +1,6 @@
 package org.model;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Observable;
 
 import org.contract.*;
@@ -19,12 +18,13 @@ public class Model extends Observable implements Imodel {
 	}
 
 	public int getTemperature() {
-		// TODO Auto-generated method stub
+		this.connector.getArduinoInfos();
 		return 0;
 	}
 
-	public void setTemperature() {
-		// TODO Auto-generated method stub
+	public void setTemperature(int temperature) {
+		
+		this.connector.writeData(temperature);
 		
 	}
 
@@ -49,6 +49,8 @@ public class Model extends Observable implements Imodel {
                 this.connector.initListener();
             }
         }
+        
+        this.notifyObserver();
 		
 		return this.connector.getConnected();
 	}
@@ -56,6 +58,8 @@ public class Model extends Observable implements Imodel {
 	public boolean disconnect() {
 		
 		this.connector.disconnect();
+		
+		this.notifyObserver();
 		
 		return this.connector.getConnected();
 	}
