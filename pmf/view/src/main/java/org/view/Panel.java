@@ -17,7 +17,9 @@ import org.contract.Imodel;
 public class Panel extends JPanel implements ActionListener, Observer {
 	private static final long serialVersionUID = 1L;
 	
-	Valeurs valeurs = new Valeurs();
+	private Valeurs valeurs = new Valeurs();
+	
+	private Port portSelector;
 	
 	private Imodel model;
 	private Icontroller controller;
@@ -37,9 +39,9 @@ public class Panel extends JPanel implements ActionListener, Observer {
 		
 		this.setLayout(null);
 		
-		Port port = new Port(Color.blue,this.model.getPortAvailable());
+		this.portSelector = new Port(Color.blue);
 		
-		this.add(port);
+		this.add(portSelector);
 		this.add(valeurs);
 		
 		this.setBackground(new Color(77,116,185));

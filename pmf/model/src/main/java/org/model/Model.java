@@ -9,6 +9,8 @@ public class Model extends Observable implements Imodel {
 	
 	private Connector connector;
 	
+	private ArrayList<String> portsAvailable;
+	
 	public double temperatureAmbiante;
 	public double humiditeRelative;
 
