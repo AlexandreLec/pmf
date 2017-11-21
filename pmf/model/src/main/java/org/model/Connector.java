@@ -63,6 +63,9 @@ public class Connector implements SerialPortEventListener {
                 portsAvailable.add(curentPortID.getName());
             }
         }
+        if(portsAvailable.isEmpty()){
+        	portsAvailable.add("null");
+        }
         
         return portsAvailable;
     }
