@@ -1,6 +1,5 @@
 package org.contract;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Observer;
 
@@ -19,6 +18,14 @@ public interface Imodel {
 	public boolean getConnected();
 	
 	public List<String> getPortAvailable();
+	
+	public List<Double> getTempInt();
+	
+	public List<Double> getTempExt();
+	
+	public List<Double> getTempModule();
+	
+	public List<Double> getHumidity();
 
 	void observerAdd(Observer o);
 

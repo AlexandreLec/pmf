@@ -7,9 +7,6 @@ import java.util.Observer;
 
 import org.contract.*;
 
-import gnu.io.SerialPortEvent;
-import gnu.io.SerialPortEventListener;
-
 public class Model extends Observable implements Imodel {
 	
 	/**
@@ -50,20 +47,13 @@ public class Model extends Observable implements Imodel {
 	
 	public void readDatas(String datas){
 		
-		System.out.println(datas);
-		
 		String[] data = datas.split("#");
 		
-		this.tempExt.add(new Double(data[0]));
-		this.tempInt.add(new Double(data[1]));
-		this.tempModule.add(new Double(data[2]));
-		this.humidity.add(new Double(data[3]));
-		
-		System.out.println(tempExt.get(0));
-		System.out.println(tempInt.get(0));
-		System.out.println(tempModule.get(0));
-		System.out.println(humidity.get(0));
-		
+		this.tempModule.add(new Double(data[1]));
+		this.tempExt.add(new Double(data[2]));
+		this.tempInt.add(new Double(data[3]));
+		this.humidity.add(new Double(data[4]));
+		this.tempInt.get(1);
 	}
 
 	public int getTemperature() {
@@ -127,6 +117,22 @@ public class Model extends Observable implements Imodel {
 
 	public List<String> getPortAvailable() {
 		return this.portsAvailable;
+	}
+	
+	public List<Double> getTempInt() {
+		return this.tempInt;
+	}
+	
+	public List<Double> getTempExt() {
+		return this.tempExt;
+	}
+	
+	public List<Double> getTempModule() {
+		return this.tempModule;
+	}
+	
+	public List<Double> getHumidity() {
+		return this.humidity;
 	}
 	
 	public double calculRosee(){
