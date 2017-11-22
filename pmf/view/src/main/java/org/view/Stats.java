@@ -23,16 +23,12 @@ public class Stats extends JPanel implements Observer {
 	private static final long serialVersionUID = 1L;
 	private Imodel model;
 	private Graphics g;
+	private int SizeTemp;
 
 	public Stats(Imodel model) {
-
 		this.model = model;
-		
 		this.model.observerAdd(this);
 		this.paintComponent(this.g);
-		
-       
-
     }
 	
 	public void paintComponent(Graphics g) {
@@ -40,6 +36,7 @@ public class Stats extends JPanel implements Observer {
 			final XYDataset dataset = createDataset();
 	        final JFreeChart chart = createChart(dataset);
 	        final ChartPanel chartPanel = new ChartPanel(chart);
+	        
 	        chartPanel.setPreferredSize(new java.awt.Dimension(750, 500));
 	        this.add(chartPanel);
 	}
@@ -52,11 +49,11 @@ public class Stats extends JPanel implements Observer {
     private XYDataset createDataset() {
         System.out.println("create");
         final XYSeries series1 = new XYSeries("Température extérieur");
-        for(double i = 1.0 ; i < this.model.getTempInt().size() ; i++){
-
-        double ValueX = this.model.getTempInt().get((int) i);
-        System.out.print("add");
-        series1.add(i, ValueX);
+        SizeTemp=this.model.getTempInt().size();
+        
+        for(double i = 0.0 ; i < this.model.getTempInt().size() ; i++){
+	        double ValueX = this.model.getTempInt().get(SizeTemp-(int) i-1);
+	        series1.add(10.0-i, ValueX);
         }
 
         final XYSeries series2 = new XYSeries("Température intérieur");
@@ -84,7 +81,6 @@ public class Stats extends JPanel implements Observer {
         dataset.addSeries(series1);
         dataset.addSeries(series2);
         dataset.addSeries(series3);
-                
         return dataset;
         
     }
@@ -97,7 +93,6 @@ public class Stats extends JPanel implements Observer {
      * @return a chart.
      */
     private JFreeChart createChart(final XYDataset dataset) {
-        
         final JFreeChart chart = ChartFactory.createXYLineChart(
             "Graphique des températures",      // chart title
             "Temps (secondes)",                      // x axis label
@@ -127,13 +122,17 @@ public class Stats extends JPanel implements Observer {
         final NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
         rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
         // OPTIONAL CUSTOMISATION COMPLETED.
-                
         return chart;
         
     }
 
 	public void update(Observable o, Object arg) {
-		this.repaint();
+		if(SizeTemp<this.model.getTempInt().size()){
+			this.removeAll();
+			//createChart(createDataset());
+			this.revalidate();
+
+		}
 		System.out.println("fritsh");
 	}
 
