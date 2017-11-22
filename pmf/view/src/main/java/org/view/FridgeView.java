@@ -9,7 +9,7 @@ public class FridgeView {
 	
 	public FridgeView(Imodel model, Icontroller controller){
 		this.model = model;
-		Frame frame = new Frame(new Panel(this.model, controller));
+		Frame frame = new Frame(this.model, controller);
 	}
 
 }

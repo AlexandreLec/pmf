@@ -4,38 +4,43 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
+import org.contract.Icontroller;
+import org.contract.Imodel;
+
 public class Frame extends JFrame{
 	private static final long serialVersionUID = 1L;
 
-	  private JTabbedPane onglet;
+	  private JTabbedPane tabs;
 
-	public Frame(JPanel panel){
+	public Frame(Imodel model, Icontroller controller){
 		
 	    this.setLocation(500,300);
-	    this.setTitle("Gérer vos conteneurs");
+	    this.setTitle("Pimp my Fridge");
 	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    this.setSize(800, 600);
         
         
         //Création de plusieurs Panneau
 
-        Panel pan = new Panel(null, null);
+        Commandes commandes = new Commandes(model, controller);
         Stats stats = new Stats();
+        Log log = new Log(model);
 
           
 
         //Création de notre conteneur d'onglets
 
-        onglet = new JTabbedPane();
+        tabs = new JTabbedPane();
 
 
-        onglet.add("Commandes", pan);
-        onglet.add("Statistiques", stats);
+        tabs.add("Commandes", commandes);
+        tabs.add("Statistiques", stats);
+        tabs.add("Logs", log);
 
 
         //On passe ensuite les onglets au content pane
 
-        this.getContentPane().add(onglet);
+        this.getContentPane().add(tabs);
         this.setVisible(true);
 
 	}
