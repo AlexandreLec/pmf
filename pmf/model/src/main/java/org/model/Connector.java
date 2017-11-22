@@ -225,7 +225,7 @@ public class Connector implements SerialPortEventListener {
             try
             {
             	byte[] readBuffer = new byte[50];
-
+            	
                 try {
                     while (input.available() > 0) {
                         int numBytes = input.read(readBuffer);
