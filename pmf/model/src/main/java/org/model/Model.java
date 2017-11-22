@@ -45,6 +45,9 @@ public class Model extends Observable implements Imodel {
 		this.portsAvailable = this.connector.searchForPort();
 		
 		this.tempInt.add(0.0);
+		this.tempExt.add(0.0);
+		this.tempModule.add(0.0);
+		this.humidity.add(0.0);
 	}
 	
 	public void readDatas(String datas){
@@ -56,17 +59,23 @@ public class Model extends Observable implements Imodel {
 		this.tempInt.add(new Double(data[3]));
 		this.humidity.add(new Double(data[4]));
 		
+		System.out.println(data[5]);
+		
 		this.notifyObserver();
 	}
 
-	public int getTemperature() {
-		return 0;
+	public double getTemperature() {
+		return this.tempModule.get(this.tempModule.size()-1);
 	}
 
 	public void setTemperature(int temperature) {
 		
 		this.connector.writeData(temperature);
 		
+	}
+	
+	public double getHumidityTx(){
+		return this.humidity.get(this.humidity.size()-1);
 	}
 
 	public boolean connect(String port) {
