@@ -23,7 +23,7 @@ public class Frame extends JFrame{
         //Création de plusieurs Panneau
 
         Commandes commandes = new Commandes(model, controller);
-        Stats stats = new Stats();
+        Stats stats = new Stats(model);
         Log log = new Log(model);
 
           
