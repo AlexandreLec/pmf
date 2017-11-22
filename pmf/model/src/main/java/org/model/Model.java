@@ -38,6 +38,8 @@ public class Model extends Observable implements Imodel {
 	 * Relative Humidity in the fridge 
 	 */
 	private List<Double> humidity = new ArrayList<Double>();
+	
+	private double ptRosee;
 
 	public Model(){
 		
@@ -60,6 +62,8 @@ public class Model extends Observable implements Imodel {
 		this.humidity.add(new Double(data[4]));
 		
 		System.out.println(data[5]);
+		
+		this.calculRosee();
 		
 		this.notifyObserver();
 	}
@@ -147,7 +151,7 @@ public class Model extends Observable implements Imodel {
 		return this.humidity;
 	}
 	
-	public double calculRosee(){
+	private void calculRosee(){
 		
 		double pointDeRosee;
 		double K;
@@ -155,7 +159,13 @@ public class Model extends Observable implements Imodel {
 		K = ((17.27 * tempInt.get(tempInt.size()-1)) / (237.7 + tempInt.get(tempInt.size()-1)))+ Math.log((humidity.get(tempInt.size()-1)) / 100);
 		pointDeRosee = (237.37 * K) / (17.27 - K);
 		
-		return pointDeRosee;
+		this.ptRosee = pointDeRosee;
+	}
+
+	public double getRosee() {
+		
+		return this.ptRosee;
+		
 	}
 	
 }

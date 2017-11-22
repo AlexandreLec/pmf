@@ -92,6 +92,7 @@ public class Commandes extends JPanel implements ActionListener, Observer {
 	public void update(Observable o, Object arg) {
 		this.Temperature();
 		this.Humidite();
+		this.Rosee();
 		
 	}
 
@@ -127,7 +128,7 @@ public class Commandes extends JPanel implements ActionListener, Observer {
 	}
 	
 	public void Rosee(){
-		//Pt_rosee= Integer.toString(x);
+		Pt_rosee= Double.toString(this.model.getRosee());
 		fr5.removeAll();
 		txt2 = new Label("Point de rosée : "+Pt_rosee);
 		fr5.revalidate();

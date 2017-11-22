@@ -15,6 +15,8 @@ public interface Imodel {
 	
 	public double getHumidityTx();
 	
+	public double getRosee();
+	
 	public String getLog();
 	
 	public boolean getConnected();
