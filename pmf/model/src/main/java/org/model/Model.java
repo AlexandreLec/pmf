@@ -152,8 +152,9 @@ public class Model extends Observable implements Imodel {
 		double pointDeRosee;
 		double K;
 		
-		K = (237.0 * tempInt.get(tempInt.size()-1)) / 17.7 + tempInt.get(tempInt.size()-1) + Math.log(humidity.get(tempInt.size()-1));
-		pointDeRosee = (237.37 * K) / (17.7 - K);
+		K = ((17.27 * tempInt.get(tempInt.size()-1)) / (237.7 + tempInt.get(tempInt.size()-1)))+ Math.log((humidity.get(tempInt.size()-1)) / 100);
+		pointDeRosee = (237.37 * K) / (17.27 - K);
+		
 		return pointDeRosee;
 	}
 	
