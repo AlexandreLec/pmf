@@ -1,17 +1,18 @@
 package org.view;
 
 import java.awt.Button;
-import java.awt.Color;
-import java.awt.Font;
+import java.awt.FlowLayout;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
-
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
+import javax.swing.border.TitledBorder;
 
 import org.contract.Icontroller;
 import org.contract.Imodel;
@@ -19,66 +20,71 @@ import org.contract.Imodel;
 public class Commandes extends JPanel implements ActionListener, Observer {
 	private static final long serialVersionUID = 1L;
 	
-	private Valeurs valeurs = new Valeurs();
-	
 	private Imodel model;
 	private Icontroller controller;
 	
 	private Button connect = new Button("Connect");
 	private Button disconnect = new Button("Disconnect");
-	
-	private JComboBox<String> listePorts = new JComboBox<String>();;
-	
+	private JComboBox<String> listePorts = new JComboBox<String>();
 	private Button moins = new Button("-");
 	private Button plus = new Button("+");
-	
 	private Label txt = new Label();
-	private Font font = new Font("Arial",Font.BOLD,20);
 	private String valeur_temperature;
-	private int number=18;		
+	private int number=0;
+	private String T="0";
+	private String Pt_rosee="0";
+	private String H="0";
+	private Label txt1 = new Label("Température actuelle : "+T);
+	private Label txt2 = new Label("Point de rosée : "+Pt_rosee);
+	private Label txt3 = new Label("Humidité : "+H);
+	
+	JPanel fr5 = new JPanel();
 
 	public Commandes(Imodel model, Icontroller controller){
-		
+		this.setLayout(new FlowLayout(FlowLayout.LEFT));
 		this.model = model;
 		this.controller = controller;	
-		
-		this.setLayout(null);
 		
 		this.buildComSelector(this.model.getPortAvailable());
 		
 		this.add(listePorts);
-		this.add(valeurs);
-		
-		this.setBackground(new Color(77,116,185));
-		this.setBounds(0,0,800,600);
 		
         this.moins.addActionListener(this);
-        this.moins.setBounds(50,200,50,50);
         this.moins.addActionListener(new ActionListener(){public void actionPerformed(ActionEvent e){Commandes.this.diminuer();}});
-        
         this.plus.addActionListener(this);
-        this.plus.setBounds(200,200,50,50);
         this.plus.addActionListener(new ActionListener(){public void actionPerformed(ActionEvent e){Commandes.this.augmenter();}});
-        
-        this.add(moins);
-        this.add(plus);
         
         this.connect.addActionListener(this);
         this.disconnect.addActionListener(this);
         
-        this.connect.setBounds(25, 50, 300, 50);
-        this.disconnect.setBounds(25, 100, 300, 50);
-        
-        this.add(connect);
-		this.add(disconnect);
-        
         valeur_temperature = Integer.toString(number);
         txt = new Label(valeur_temperature);
-        
-        this.add(txt); 
-        txt.setBounds(140,200,100,50); 
-        txt.setForeground(new Color(0,0,0));
-        txt.setFont(font);
+
+        afficher();
+	}
+	
+	public void afficher(){
+		this.removeAll();
+        fr5.setBorder(new TitledBorder("Valeurs "));
+        fr5.setLayout(new BoxLayout(fr5, BoxLayout.Y_AXIS));
+        fr5.add(listePorts);
+        fr5.add(Box.createVerticalStrut(10));
+        fr5.add(connect);
+        fr5.add(Box.createVerticalStrut(10));
+        fr5.add(disconnect);
+        fr5.add(Box.createVerticalStrut(30));
+        fr5.add(plus);
+        fr5.add(Box.createVerticalStrut(10));
+        fr5.add(txt);
+        fr5.add(Box.createVerticalStrut(10));
+        fr5.add(moins);
+        fr5.add(Box.createVerticalStrut(10));
+        fr5.add(txt1);
+        fr5.add(Box.createVerticalStrut(10));
+        fr5.add(txt2);
+        fr5.add(Box.createVerticalStrut(10));
+        fr5.add(txt3);
+        this.add(fr5);
 	}
 
 	public void update(Observable o, Object arg) {
@@ -98,20 +104,49 @@ public class Commandes extends JPanel implements ActionListener, Observer {
 		
 	public void diminuer(){
 		number--;
-		this.remove(txt);
+		fr5.removeAll();
         valeur_temperature = Integer.toString(number);
         txt = new Label(valeur_temperature);
-        this.add(txt);txt.setBounds(140,200,100,50);txt.setForeground(new Color(0,0,0));txt.setFont(font);
-		this.revalidate();
+		fr5.revalidate();
+		
+		afficher();
+	}
+	
+	public void Temperature(int x){
+		T= Integer.toString(x);
+		fr5.removeAll();
+		txt1 = new Label("Température actuelle : "+T);
+		fr5.revalidate();
+		
+		afficher();
+	}
+	
+	public void Rosee(int x){
+		Pt_rosee= Integer.toString(x);
+		fr5.removeAll();
+		txt2 = new Label("Point de rosée : "+Pt_rosee);
+		fr5.revalidate();
+		
+		afficher();
+	}
+	
+	public void Humidite(int x){
+		H= Integer.toString(x);
+		fr5.removeAll();
+		txt3 = new Label("Humidité : "+H);
+		fr5.revalidate();
+		
+		afficher();
 	}
 	
 	public void augmenter(){
 		number++;
-		this.remove(txt);
+		fr5.removeAll();
         valeur_temperature = Integer.toString(number);
         txt = new Label(valeur_temperature);
-        this.add(txt);txt.setBounds(140,200,100,50);txt.setForeground(new Color(0,0,0));txt.setFont(font);
-		this.revalidate();
+		fr5.revalidate();
+		
+		afficher();
 	}
 	
 	private void buildComSelector(List<String> portAvailable){

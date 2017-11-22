@@ -1,7 +1,6 @@
 package org.view;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 import org.contract.Icontroller;
@@ -18,6 +17,7 @@ public class Frame extends JFrame{
 	    this.setTitle("Pimp my Fridge");
 	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    this.setSize(800, 600);
+	    
         
         
         //Création de plusieurs Panneau
