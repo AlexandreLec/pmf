@@ -7,7 +7,9 @@ import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.TooManyListenersException;
 
@@ -37,7 +39,7 @@ public class Connector implements SerialPortEventListener {
     final static int TIMEOUT = 2000;
 
     //input and output streams for sending and receiving data
-    private InputStream input = null;
+    private BufferedReader input = null;
     private OutputStream output = null;
 
     //String containing Arduino's informations
@@ -130,7 +132,7 @@ public class Connector implements SerialPortEventListener {
         boolean successful = false;
 
         try {
-            input = serialPort.getInputStream();
+            input = new BufferedReader(new InputStreamReader(serialPort.getInputStream()));
             output = serialPort.getOutputStream();
             writeData(0);
 
@@ -219,19 +221,16 @@ public class Connector implements SerialPortEventListener {
      * @param event
      *  Event
      */
-    public void serialEvent(SerialPortEvent event) {
+    public synchronized void serialEvent(SerialPortEvent event) {
         if (event.getEventType() == SerialPortEvent.DATA_AVAILABLE)
         {
             try
             {
-            	byte[] readBuffer = new byte[50];
-            	
-                try {
-                    while (input.available() > 0) {
-                        int numBytes = input.read(readBuffer);
-                        System.out.println(new String(readBuffer));
-                    }
-                } catch (IOException e) {System.out.println(e);}
+            	String datas = new String();
+                if(input.ready()){
+                	datas = input.readLine();
+                	this.model.readDatas(datas);
+                }
 
             }
             catch (Exception e)
