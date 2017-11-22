@@ -45,6 +45,8 @@ public class Commandes extends JPanel implements ActionListener, Observer {
 		this.model = model;
 		this.controller = controller;	
 		
+		this.model.observerAdd(this);
+		
 		this.buildComSelector(this.model.getPortAvailable());
 		
 		this.add(listePorts);
@@ -88,7 +90,9 @@ public class Commandes extends JPanel implements ActionListener, Observer {
 	}
 
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
+		this.Temperature();
+		this.Humidite();
+		this.Rosee();
 		
 	}
 
@@ -109,11 +113,13 @@ public class Commandes extends JPanel implements ActionListener, Observer {
         txt = new Label(valeur_temperature);
 		fr5.revalidate();
 		
+		this.controller.setTemperature(Integer.parseInt(valeur_temperature));
+		
 		afficher();
 	}
 	
-	public void Temperature(int x){
-		T= Integer.toString(x);
+	public void Temperature(){
+		T= Double.toString(this.model.getTemperature());
 		fr5.removeAll();
 		txt1 = new Label("Température actuelle : "+T);
 		fr5.revalidate();
@@ -121,8 +127,8 @@ public class Commandes extends JPanel implements ActionListener, Observer {
 		afficher();
 	}
 	
-	public void Rosee(int x){
-		Pt_rosee= Integer.toString(x);
+	public void Rosee(){
+		Pt_rosee= Double.toString(this.model.getRosee());
 		fr5.removeAll();
 		txt2 = new Label("Point de rosée : "+Pt_rosee);
 		fr5.revalidate();
@@ -130,8 +136,8 @@ public class Commandes extends JPanel implements ActionListener, Observer {
 		afficher();
 	}
 	
-	public void Humidite(int x){
-		H= Integer.toString(x);
+	public void Humidite(){
+		H= Double.toString(this.model.getHumidityTx());
 		fr5.removeAll();
 		txt3 = new Label("Humidité : "+H);
 		fr5.revalidate();

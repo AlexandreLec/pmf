@@ -9,9 +9,13 @@ public interface Imodel {
 	
 	public boolean disconnect();
 	
-	public int getTemperature();
+	public double getTemperature();
 	
 	public void setTemperature(int temperature);
+	
+	public double getHumidityTx();
+	
+	public double getRosee();
 	
 	public String getLog();
 	

@@ -18,4 +18,8 @@ public class FridgeControl implements Icontroller
     public void disconnect(){
     	this.model.disconnect();
     }
+    
+    public void setTemperature(int temp){
+    	this.model.setTemperature(temp);
+    }
 }

@@ -1,7 +1,8 @@
 package org.view;
 
 import java.awt.Color;
-import java.awt.Graphics;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -21,18 +22,39 @@ import org.jfree.data.xy.XYSeriesCollection;
 
 public class Stats extends JPanel implements Observer {
 	private static final long serialVersionUID = 1L;
+	
 	private Imodel model;
-	private Graphics g;
-	private int SizeTemp;
 
+	private JFreeChart chart;
+	
+	private ChartPanel chartPanel;
+	
+	private XYDataset dataset;
+	
+	private int SizeTemp;
+	
+	private List<Double> test = new ArrayList<Double>();
+	
 	public Stats(Imodel model) {
 		this.model = model;
 		this.model.observerAdd(this);
-		this.paintComponent(this.g);
+		
+		this.test.add(1.0);
+		this.test.add(2.0);
+		this.test.add(3.0);
+		this.test.add(4.0);
+		
+		this.paintComponent(); 
+        
+		this.dataset = createDataset();
+        this.chart = createChart(dataset);
+        this.chartPanel = new ChartPanel(chart);
+        chartPanel.setPreferredSize(new java.awt.Dimension(750, 500));
+        this.add(chartPanel);
+        
     }
 	
-	public void paintComponent(Graphics g) {
-		
+	public void paintComponent() {
 			final XYDataset dataset = createDataset();
 	        final JFreeChart chart = createChart(dataset);
 	        final ChartPanel chartPanel = new ChartPanel(chart);
@@ -55,8 +77,7 @@ public class Stats extends JPanel implements Observer {
 	        double ValueX = this.model.getTempInt().get(SizeTemp-(int) i-1);
 	        series1.add(10.0-i, ValueX);
         }
-
-        final XYSeries series2 = new XYSeries("Température intérieur");
+        /**XYSeries series2 = new XYSeries("Température intérieur");
         series2.add(1.0, 5.0);
         series2.add(2.0, 7.0);
         series2.add(3.0, 6.0);
@@ -67,7 +88,7 @@ public class Stats extends JPanel implements Observer {
         series2.add(8.0, 1.0);
         series2.add(8.0, this.model.getTempInt().get(this.model.getTempInt().size()-1));
 
-        final XYSeries series3 = new XYSeries("Température du module");
+        XYSeries series3 = new XYSeries("Température du module");
         series3.add(3.0, 4.0);
         series3.add(4.0, 3.0);
         series3.add(5.0, 2.0);
@@ -75,14 +96,11 @@ public class Stats extends JPanel implements Observer {
         series3.add(7.0, 6.0);
         series3.add(8.0, 3.0);
         series3.add(9.0, 4.0);
-        series3.add(10.0, 9.0);
+        series3.add(10.0, 9.0);*/
 
-        final XYSeriesCollection dataset = new XYSeriesCollection();
+        XYSeriesCollection dataset = new XYSeriesCollection();
         dataset.addSeries(series1);
-        dataset.addSeries(series2);
-        dataset.addSeries(series3);
         return dataset;
-        
     }
     
     /**
@@ -127,6 +145,7 @@ public class Stats extends JPanel implements Observer {
     }
 
 	public void update(Observable o, Object arg) {
+
 		if(SizeTemp<this.model.getTempInt().size()){
 			this.removeAll();
 			//createChart(createDataset());
