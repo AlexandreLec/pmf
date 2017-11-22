@@ -14,6 +14,10 @@ import java.util.TooManyListenersException;
 
 public class Connector implements SerialPortEventListener {
 
+	private Model model;
+	
+	private byte[] datas = new byte[4];
+	
     //static CommPortIdentifier SerialPortId;
     private CommPortIdentifier curentPortID;
 
@@ -24,7 +28,7 @@ public class Connector implements SerialPortEventListener {
     private SerialPort serialPort;
 
     //Map the port names to CommPortIdentifiers
-	private HashMap<String,CommPortIdentifier> portMap = new HashMap();
+	private HashMap<String,CommPortIdentifier> portMap = new HashMap<String, CommPortIdentifier>();
 
     //Connection status
     private boolean connected = false;
@@ -47,11 +51,15 @@ public class Connector implements SerialPortEventListener {
     final static int DASH_ASCII = 45;
     final static int NEW_LINE_ASCII = 10;
 
+    public Connector(Model model){
+    	this.model = model;
+    }
 
     /**
      * Search the availables ports
      */
-    public ArrayList<String> searchForPort(){
+    @SuppressWarnings("unchecked")
+	public ArrayList<String> searchForPort(){
 
     	ArrayList<String> portsAvailable = new ArrayList<String>();
     	
@@ -70,9 +78,12 @@ public class Connector implements SerialPortEventListener {
         return portsAvailable;
     }
     
-    public void searchPort(){
+    @SuppressWarnings("unchecked")
+	public void searchPort(){
     	
         this.enumComm = CommPortIdentifier.getPortIdentifiers();
+        Date date = new Date();
+        this.setTextLog(this.getTextLog() + date.toString()+": Searching availables ports\n");
         while (enumComm.hasMoreElements()) {
             curentPortID = (CommPortIdentifier) enumComm.nextElement();
             if(curentPortID.getPortType() == CommPortIdentifier.PORT_SERIAL) {
@@ -98,6 +109,8 @@ public class Connector implements SerialPortEventListener {
             this.serialPort = (SerialPort)commPort;
 
             setConnected(true);
+            Date date = new Date();
+            this.setTextLog(this.getTextLog() + date.toString()+": Connection successful\n");
         }
         catch (PortInUseException e)
         {
@@ -122,6 +135,8 @@ public class Connector implements SerialPortEventListener {
             writeData(0);
 
             successful = true;
+            Date date = new Date();
+            this.setTextLog(this.getTextLog() + date.toString()+": I/O Streams openning successful\n");
             return successful;
         }
         catch (IOException e) {
@@ -139,6 +154,8 @@ public class Connector implements SerialPortEventListener {
         {
             serialPort.addEventListener(this);
             serialPort.notifyOnDataAvailable(true);
+            Date date = new Date();
+            this.setTextLog(this.getTextLog() + date.toString()+": Init Listener\n");
         }
         catch (TooManyListenersException e)
         {
@@ -161,6 +178,8 @@ public class Connector implements SerialPortEventListener {
             serialPort.close();
             input.close();
             output.close();
+            Date date = new Date();
+            this.setTextLog(this.getTextLog() + date.toString()+": Disconnection successful\n");
             setConnected(false);
         }
         catch (Exception e)
@@ -185,6 +204,8 @@ public class Connector implements SerialPortEventListener {
             //will be read as a byte so it is a space key
             output.write(SPACE_ASCII);
             output.flush();
+            Date date = new Date();
+            this.setTextLog(this.getTextLog() + date.toString()+": Datas sent\n");
         }
         catch (Exception e)
         {
@@ -203,16 +224,14 @@ public class Connector implements SerialPortEventListener {
         {
             try
             {
-                byte singleData = (byte) input.read();
+            	byte[] readBuffer = new byte[50];
 
-                if (singleData != NEW_LINE_ASCII)
-                {
-                    this.arduinoInfos += new String(new byte[] {singleData});
-                }
-                else
-                {
-                	this.arduinoInfos += "\n";
-                }
+                try {
+                    while (input.available() > 0) {
+                        int numBytes = input.read(readBuffer);
+                        System.out.println(new String(readBuffer));
+                    }
+                } catch (IOException e) {System.out.println(e);}
 
             }
             catch (Exception e)
@@ -239,14 +258,6 @@ public class Connector implements SerialPortEventListener {
      */
     public void setConnected(boolean value){
         this.connected = value;
-    }
-
-    /**
-     * Get the arduino informations recieve
-     * @return
-     */
-    public String getArduinoInfos(){
-        return this.arduinoInfos;
     }
 
 	public String getTextLog() {

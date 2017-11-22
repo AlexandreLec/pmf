@@ -1,6 +1,8 @@
 package org.contract;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Observer;
 
 public interface Imodel {
 	
@@ -12,13 +14,13 @@ public interface Imodel {
 	
 	public void setTemperature(int temperature);
 	
-	public void onLED();
-	
-	public void offLED();
-	
 	public String getLog();
 	
 	public boolean getConnected();
 	
-	public ArrayList<String> getPortAvailable();
+	public List<String> getPortAvailable();
+
+	void observerAdd(Observer o);
+
+	void observerDelete(Observer o);
 }

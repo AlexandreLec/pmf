@@ -12,7 +12,6 @@ public class FridgeControl implements Icontroller
     }
     
     public void connect(String comId){
-		System.out.print("hello");
     	this.model.connect(comId);
     }
     

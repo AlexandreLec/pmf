@@ -6,23 +6,28 @@ import java.awt.Font;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
 import org.contract.Icontroller;
 import org.contract.Imodel;
 
-public class Panel extends JPanel implements ActionListener, Observer {
+public class Commandes extends JPanel implements ActionListener, Observer {
 	private static final long serialVersionUID = 1L;
 	
 	private Valeurs valeurs = new Valeurs();
 	
-	private Port portSelector;
-	
 	private Imodel model;
 	private Icontroller controller;
+	
+	private Button connect = new Button("Connect");
+	private Button disconnect = new Button("Disconnect");
+	
+	private JComboBox<String> listePorts = new JComboBox<String>();;
 	
 	private Button moins = new Button("-");
 	private Button plus = new Button("+");
@@ -32,16 +37,16 @@ public class Panel extends JPanel implements ActionListener, Observer {
 	private String valeur_temperature;
 	private int number=18;		
 
-	public Panel(Imodel model, Icontroller controller){
+	public Commandes(Imodel model, Icontroller controller){
 		
 		this.model = model;
 		this.controller = controller;	
 		
 		this.setLayout(null);
 		
-		this.portSelector = new Port(Color.blue);
+		this.buildComSelector(this.model.getPortAvailable());
 		
-		this.add(portSelector);
+		this.add(listePorts);
 		this.add(valeurs);
 		
 		this.setBackground(new Color(77,116,185));
@@ -49,14 +54,23 @@ public class Panel extends JPanel implements ActionListener, Observer {
 		
         this.moins.addActionListener(this);
         this.moins.setBounds(50,200,50,50);
-        this.moins.addActionListener(new ActionListener(){public void actionPerformed(ActionEvent e){Panel.this.diminuer();}});
+        this.moins.addActionListener(new ActionListener(){public void actionPerformed(ActionEvent e){Commandes.this.diminuer();}});
         
         this.plus.addActionListener(this);
         this.plus.setBounds(200,200,50,50);
-        this.plus.addActionListener(new ActionListener(){public void actionPerformed(ActionEvent e){Panel.this.augmenter();}});
+        this.plus.addActionListener(new ActionListener(){public void actionPerformed(ActionEvent e){Commandes.this.augmenter();}});
         
         this.add(moins);
         this.add(plus);
+        
+        this.connect.addActionListener(this);
+        this.disconnect.addActionListener(this);
+        
+        this.connect.setBounds(25, 50, 300, 50);
+        this.disconnect.setBounds(25, 100, 300, 50);
+        
+        this.add(connect);
+		this.add(disconnect);
         
         valeur_temperature = Integer.toString(number);
         txt = new Label(valeur_temperature);
@@ -73,8 +87,13 @@ public class Panel extends JPanel implements ActionListener, Observer {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		
+		if(e.getSource().equals(this.connect)){
+			this.controller.connect(this.listePorts.getSelectedItem().toString());
+		}
+		else if(e.getSource().equals(this.disconnect)){
+			this.controller.disconnect();
+		}
 	}
 		
 	public void diminuer(){
@@ -93,6 +112,13 @@ public class Panel extends JPanel implements ActionListener, Observer {
         txt = new Label(valeur_temperature);
         this.add(txt);txt.setBounds(140,200,100,50);txt.setForeground(new Color(0,0,0));txt.setFont(font);
 		this.revalidate();
+	}
+	
+	private void buildComSelector(List<String> portAvailable){
+		
+		for(int i = 0; i < portAvailable.size(); i++){
+			this.listePorts.addItem(portAvailable.get(i));
+		}
 	}
 
 
