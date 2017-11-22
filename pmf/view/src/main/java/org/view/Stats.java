@@ -1,9 +1,13 @@
 package org.view;
 
 import java.awt.Color;
+import java.awt.Graphics;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JPanel;
 
+import org.contract.Imodel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -14,22 +18,31 @@ import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
-import org.jfree.ui.ApplicationFrame;
-import org.jfree.ui.RefineryUtilities;
 
-public class Stats extends JPanel {
+public class Stats extends JPanel implements Observer {
 	private static final long serialVersionUID = 1L;
+	private Imodel model;
+	private Graphics g;
 
-	public Stats() {
+	public Stats(Imodel model) {
 
-        final XYDataset dataset = createDataset();
-        final JFreeChart chart = createChart(dataset);
-        final ChartPanel chartPanel = new ChartPanel(chart);
-        chartPanel.setPreferredSize(new java.awt.Dimension(500, 270));
-        
-        this.add(chartPanel);
+		this.model = model;
+		
+		this.model.observerAdd(this);
+		this.paintComponent(this.g);
+		
+       
 
     }
+	
+	public void paintComponent(Graphics g) {
+		
+			final XYDataset dataset = createDataset();
+	        final JFreeChart chart = createChart(dataset);
+	        final ChartPanel chartPanel = new ChartPanel(chart);
+	        chartPanel.setPreferredSize(new java.awt.Dimension(750, 500));
+	        this.add(chartPanel);
+	}
     
     /**
      * Creates a sample dataset.
@@ -37,18 +50,16 @@ public class Stats extends JPanel {
      * @return a sample dataset.
      */
     private XYDataset createDataset() {
-        
-        final XYSeries series1 = new XYSeries("Température ");
-        series1.add(1.0, 1.0);
-        series1.add(2.0, 4.0);
-        series1.add(3.0, 3.0);
-        series1.add(4.0, 5.0);
-        series1.add(5.0, 5.0);
-        series1.add(6.0, 7.0);
-        series1.add(7.0, 7.0);
-        series1.add(8.0, 8.0);
+        System.out.println("create");
+        final XYSeries series1 = new XYSeries("Température extérieur");
+        for(double i = 1.0 ; i < this.model.getTempInt().size() ; i++){
 
-        final XYSeries series2 = new XYSeries("Second");
+        double ValueX = this.model.getTempInt().get((int) i);
+        System.out.print("add");
+        series1.add(i, ValueX);
+        }
+
+        final XYSeries series2 = new XYSeries("Température intérieur");
         series2.add(1.0, 5.0);
         series2.add(2.0, 7.0);
         series2.add(3.0, 6.0);
@@ -57,8 +68,9 @@ public class Stats extends JPanel {
         series2.add(6.0, 4.0);
         series2.add(7.0, 2.0);
         series2.add(8.0, 1.0);
+        series2.add(8.0, this.model.getTempInt().get(this.model.getTempInt().size()-1));
 
-        final XYSeries series3 = new XYSeries("Third");
+        final XYSeries series3 = new XYSeries("Température du module");
         series3.add(3.0, 4.0);
         series3.add(4.0, 3.0);
         series3.add(5.0, 2.0);
@@ -87,9 +99,9 @@ public class Stats extends JPanel {
     private JFreeChart createChart(final XYDataset dataset) {
         
         final JFreeChart chart = ChartFactory.createXYLineChart(
-            "Line Chart Demo 6",      // chart title
-            "X",                      // x axis label
-            "Y",                      // y axis label
+            "Graphique des températures",      // chart title
+            "Temps (secondes)",                      // x axis label
+            "Température (C°)",                      // y axis label
             dataset,                  // data
             PlotOrientation.VERTICAL,
             true,                     // include legend
@@ -107,8 +119,8 @@ public class Stats extends JPanel {
         plot.setRangeGridlinePaint(Color.white);
         
         final XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
-        renderer.setSeriesLinesVisible(0, false);
-        renderer.setSeriesShapesVisible(1, false);
+        renderer.setSeriesLinesVisible(1, true);
+        renderer.setSeriesShapesVisible(1, true);
         plot.setRenderer(renderer);
 
         // change the auto tick unit selection to integer units only...
@@ -119,5 +131,10 @@ public class Stats extends JPanel {
         return chart;
         
     }
+
+	public void update(Observable o, Object arg) {
+		this.repaint();
+		System.out.println("fritsh");
+	}
 
 }
