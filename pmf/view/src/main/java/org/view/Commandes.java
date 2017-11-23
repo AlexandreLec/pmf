@@ -93,7 +93,7 @@ public class Commandes extends JPanel implements ActionListener, Observer {
 		this.Temperature();
 		this.Humidite();
 		this.Rosee();
-		
+		System.out.println("update");
 	}
 
 	public void actionPerformed(ActionEvent e) {
