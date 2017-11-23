@@ -18,6 +18,11 @@ import javax.swing.border.TitledBorder;
 import org.contract.Icontroller;
 import org.contract.Imodel;
 
+/**
+ * Panel commands
+ * @author  Alexis
+ *
+ */
 public class Commandes extends JPanel implements ActionListener, Observer {
 	private static final long serialVersionUID = 1L;
 	
@@ -41,6 +46,11 @@ public class Commandes extends JPanel implements ActionListener, Observer {
 	
 	JPanel fr5 = new JPanel();
 
+	/**
+	 * 
+	 * @param model
+	 * @param controller
+	 */
 	public Commandes(Imodel model, Icontroller controller){
 		this.setLayout(new FlowLayout(FlowLayout.LEFT));
 		this.model = model;
