@@ -61,6 +61,8 @@ public class Model extends Observable implements Imodel {
 	
 	public void readDatas(String datas){
 		
+		System.out.println(datas);
+		
 		String[] data = datas.split("#");
 		
 		this.tempModule.add(new Double(data[1]));
@@ -75,7 +77,7 @@ public class Model extends Observable implements Imodel {
 		else {
 			this.openDoor = false;
 		}
-		if(Integer.parseInt(data[4]) >= 80.00){
+		if(Double.parseDouble(data[4]) >= 80.00){
 			this.condensation = true;
 			System.out.println("warning");
 		}
