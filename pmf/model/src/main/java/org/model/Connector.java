@@ -204,8 +204,6 @@ public class Connector implements SerialPortEventListener {
             output.write(control);
             output.flush();
             //will be read as a byte so it is a space key
-            output.write(SPACE_ASCII);
-            output.flush();
             Date date = new Date();
             this.setTextLog(this.getTextLog() + date.toString()+": Datas sent\n");
         }
