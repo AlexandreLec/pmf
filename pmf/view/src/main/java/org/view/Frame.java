@@ -25,7 +25,6 @@ public class Frame extends JFrame{
 	   * @param model
 	   * @param controller
 	   */
-
 	public Frame(Imodel model, Icontroller controller){
 		
 	    this.setLocation(500,300);

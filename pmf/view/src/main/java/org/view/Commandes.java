@@ -90,7 +90,6 @@ public class Commandes extends JPanel implements ActionListener, Observer {
 	/**
 	 * Panel containing the different components
 	 */
-	
 	public void afficher(){
 		this.removeAll();
         fr5.setBorder(new TitledBorder("Commandes "));
@@ -131,7 +130,6 @@ public class Commandes extends JPanel implements ActionListener, Observer {
 	/**
 	 * Method that reacts with the actions of the Arduino
 	 */
-
 	public void update(Observable o, Object arg) {
 		this.Temperature();
 		this.Humidite();
@@ -144,7 +142,6 @@ public class Commandes extends JPanel implements ActionListener, Observer {
 	/**
 	 * Used to connect and disconnect ports
 	 */
-
 	public void actionPerformed(ActionEvent e) {
 		
 		if(e.getSource().equals(this.connect)){
@@ -158,7 +155,6 @@ public class Commandes extends JPanel implements ActionListener, Observer {
 	/**
 	 * View Alert Messages
 	 */
-	
 	private void checkAlert(){
 		
 		if(this.model.openDoor()){
@@ -177,15 +173,13 @@ public class Commandes extends JPanel implements ActionListener, Observer {
 	/**
 	 * Send temperature instruction 
 	 */
-
 	public void sendConsigne(){
 		this.controller.setTemperature(Integer.parseInt(this.txt.getText()));
 	}
 	
 	/**
 	 * decrease instuction
-	 */
-		
+	 */	
 	public void diminuer(){
 		number--;
 		fr5.removeAll();
@@ -197,8 +191,7 @@ public class Commandes extends JPanel implements ActionListener, Observer {
 	
 	/**
 	 * Display the temperature
-	 */
-	
+	 */	
 	public void Temperature(){
 		T= Double.toString(this.model.getTemperature());
 		fr5.removeAll();
@@ -211,7 +204,6 @@ public class Commandes extends JPanel implements ActionListener, Observer {
 	/**
 	 * Display the dew point
 	 */
-	
 	public void Rosee(){
 		Pt_rosee= Double.toString(this.model.getRosee());
 		fr5.removeAll();
@@ -224,7 +216,6 @@ public class Commandes extends JPanel implements ActionListener, Observer {
 	/**
 	 * Display humidity
 	 */
-	
 	public void Humidite(){
 		H= Double.toString(this.model.getHumidityTx());
 		fr5.removeAll();
@@ -237,7 +228,6 @@ public class Commandes extends JPanel implements ActionListener, Observer {
 	/**
 	 * Increase instruction
 	 */
-	
 	public void augmenter(){
 		number++;
 		fr5.removeAll();
@@ -252,7 +242,6 @@ public class Commandes extends JPanel implements ActionListener, Observer {
 	 * Display list of available ports
 	 * @param portAvailable
 	 */
-	
 	private void buildComSelector(List<String> portAvailable){
 		
 		for(int i = 0; i < portAvailable.size(); i++){
