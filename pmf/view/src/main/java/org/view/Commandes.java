@@ -34,9 +34,10 @@ public class Commandes extends JPanel implements ActionListener, Observer {
 	private JComboBox<String> listePorts = new JComboBox<String>();
 	private Button moins = new Button("-");
 	private Button plus = new Button("+");
+	private Button validate = new Button("Validate");
 	private Label txt = new Label();
 	private String valeur_temperature;
-	private int number=0;
+	private int number=17;
 	private String T="0";
 	private String Pt_rosee="0";
 	private String H="0";
@@ -52,7 +53,7 @@ public class Commandes extends JPanel implements ActionListener, Observer {
 	 * @param controller
 	 */
 	public Commandes(Imodel model, Icontroller controller){
-		this.setLayout(new FlowLayout(FlowLayout.LEFT));
+		this.setLayout(new FlowLayout(FlowLayout.CENTER));
 		this.model = model;
 		this.controller = controller;	
 		
@@ -66,19 +67,22 @@ public class Commandes extends JPanel implements ActionListener, Observer {
         this.moins.addActionListener(new ActionListener(){public void actionPerformed(ActionEvent e){Commandes.this.diminuer();}});
         this.plus.addActionListener(this);
         this.plus.addActionListener(new ActionListener(){public void actionPerformed(ActionEvent e){Commandes.this.augmenter();}});
+        this.validate.addActionListener(this);
+        this.validate.addActionListener(new ActionListener(){public void actionPerformed(ActionEvent e){Commandes.this.sendConsigne();}});
         
         this.connect.addActionListener(this);
         this.disconnect.addActionListener(this);
         
         valeur_temperature = Integer.toString(number);
         txt = new Label(valeur_temperature);
+        txt.setAlignment(Label.CENTER);
 
         afficher();
 	}
 	
 	public void afficher(){
 		this.removeAll();
-        fr5.setBorder(new TitledBorder("Valeurs "));
+        fr5.setBorder(new TitledBorder("Commandes "));
         fr5.setLayout(new BoxLayout(fr5, BoxLayout.Y_AXIS));
         fr5.add(listePorts);
         fr5.add(Box.createVerticalStrut(10));
@@ -92,12 +96,24 @@ public class Commandes extends JPanel implements ActionListener, Observer {
         fr5.add(Box.createVerticalStrut(10));
         fr5.add(moins);
         fr5.add(Box.createVerticalStrut(10));
+        fr5.add(validate);
+        fr5.add(Box.createVerticalStrut(10));
         fr5.add(txt1);
         fr5.add(Box.createVerticalStrut(10));
         fr5.add(txt2);
         fr5.add(Box.createVerticalStrut(10));
         fr5.add(txt3);
         this.add(fr5);
+
+		/**valeurs.setBorder(new TitledBorder("Valeurs "));
+	    valeurs.setLayout(new BoxLayout(valeurs, BoxLayout.Y_AXIS));
+	    valeurs.add(Box.createVerticalStrut(10));
+	    valeurs.add(txt1);
+	    valeurs.add(Box.createVerticalStrut(10));
+	    valeurs.add(txt2);
+	    valeurs.add(Box.createVerticalStrut(10));
+	    valeurs.add(txt3);
+	    this.add(valeurs);*/
 	}
 
 	public void update(Observable o, Object arg) {
@@ -134,6 +150,10 @@ public class Commandes extends JPanel implements ActionListener, Observer {
         	JOptionPane.showMessageDialog(this, "Risque de condensation");
         	System.out.println("Risque de condensation");
         }
+	}
+
+	public void sendConsigne(){
+		this.controller.setTemperature(Integer.parseInt(this.txt.getText()));
 	}
 		
 	public void diminuer(){

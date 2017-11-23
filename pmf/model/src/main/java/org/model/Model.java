@@ -47,6 +47,8 @@ public class Model extends Observable implements Imodel {
 	private boolean openDoor = false;
 	
 	private boolean condensation = false;
+	
+	private int consigne;
 
 	public Model(){
 		
@@ -69,7 +71,7 @@ public class Model extends Observable implements Imodel {
 		this.tempExt.add(new Double(data[2]));
 		this.tempInt.add(new Double(data[3]));
 		this.humidity.add(new Double(data[4]));
-		
+
 		if(data[6].compareTo("W") == 0){
 			this.openDoor = true;
 			System.out.println("warning");
@@ -196,6 +198,10 @@ public class Model extends Observable implements Imodel {
 	
 	public boolean condensation(){
 		return this.condensation;
+	}
+	
+	public int getConsigne(){
+		return this.consigne;
 	}
 	
 }

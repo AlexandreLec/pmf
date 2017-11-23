@@ -34,6 +34,8 @@ public interface Imodel {
 	public boolean condensation();
 	
 	public boolean openDoor();
+	
+	public int getConsigne();
 
 	void observerAdd(Observer o);
 
