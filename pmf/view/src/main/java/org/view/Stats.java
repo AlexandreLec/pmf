@@ -31,8 +31,6 @@ public class Stats extends JPanel implements Observer {
 	
 	private XYDataset dataset;
 	
-	private int SizeTemp;
-	
 	private List<Double> test = new ArrayList<Double>();
 	
 	final XYSeries series1 = new XYSeries("Température extérieur");
@@ -54,7 +52,6 @@ public class Stats extends JPanel implements Observer {
         this.chartPanel = new ChartPanel(chart);
         chartPanel.setPreferredSize(new java.awt.Dimension(750, 500));
         this.add(chartPanel);
-        SizeTemp=this.model.getTempInt().size();
         
     }
 	
@@ -77,8 +74,6 @@ public class Stats extends JPanel implements Observer {
 	
     private XYDataset createDataset() {
         final XYSeries series1 = new XYSeries("Température intérieur");
-        SizeTemp=this.model.getTempInt().size();
-
         
         for(double i = 2.0 ; i < this.model.getTempInt().size() ; i++){
 	        double ValueX = this.model.getTempInt().get((int) i);
@@ -88,14 +83,14 @@ public class Stats extends JPanel implements Observer {
 
         
         XYSeries series2 = new XYSeries("Température extérieur");
-        for(double j = 1.0 ; j < this.model.getTempExt().size() ; j++){
+        for(double j = 2.0 ; j < this.model.getTempExt().size() ; j++){
             
         	double ValueXinterieur = this.model.getTempExt().get((int) j);
         	series2.add(j, ValueXinterieur);
         }
 
         XYSeries series3 = new XYSeries("Température du module");
-        for(double k = 1.0 ; k < this.model.getTempModule().size() ; k++){
+        for(double k = 2.0 ; k < this.model.getTempModule().size() ; k++){
             
         	double ValueXmodule = this.model.getTempModule().get((int) k);
         	series3.add(k, ValueXmodule);
