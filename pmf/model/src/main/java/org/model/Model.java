@@ -42,10 +42,6 @@ public class Model extends Observable implements Imodel {
 	 */
 	private List<Double> humidity = new ArrayList<Double>();
 	
-	/**
-	 * Dew point
-	 */
-	
 	private double ptRosee;
 	
 	private boolean openDoor = false;
@@ -57,6 +53,10 @@ public class Model extends Observable implements Imodel {
 	private int size_limite=30;
 
 
+	/**
+	 * connects to the port
+	 * initializes the data to 0
+	 */
 	public Model(){
 		
 		this.connector = new Connector(this);
@@ -68,6 +68,10 @@ public class Model extends Observable implements Imodel {
 		this.humidity.add(0.0);
 	}
 	
+	/**
+	 * Read the datas from the Arduino
+	 * @param datas
+	 */
 	public void readDatas(String datas){
 		
 		String[] data = datas.split("#");
@@ -128,20 +132,32 @@ public class Model extends Observable implements Imodel {
 		this.notifyObserver();
 	}
 
+	/**
+	 * Get the temperature of the module
+	 */
 	public double getTemperature() {
 		return this.tempModule.get(this.tempModule.size()-1);
 	}
 
+	/**
+	 * Set the temperature
+	 */
 	public void setTemperature(int temperature) {
 		
 		this.connector.writeData(temperature);
 		
 	}
 	
+	/**
+	 * Get the humidity
+	 */
 	public double getHumidityTx(){
 		return this.humidity.get(this.humidity.size()-1);
 	}
 
+	/**
+	 * Connection to the Arduino
+	 */
 	public boolean connect(String port) {
 
 		this.connector.searchPort();
@@ -159,6 +175,9 @@ public class Model extends Observable implements Imodel {
 		return this.connector.getConnected();
 	}
 
+	/**
+	 * Disconnection from the Arduino
+	 */
 	public boolean disconnect() {
 		
 		this.connector.disconnect();
@@ -168,45 +187,75 @@ public class Model extends Observable implements Imodel {
 		return this.connector.getConnected();
 	}
 	
+	/**
+	 * Notify the observer
+	 */
     public void notifyObserver()
     {
             setChanged();
             notifyObservers();
     }
     
+    /**
+     * Add an observer
+     */
 	public void observerAdd(Observer o) {
 		this.addObserver(o);
 	}
 	
+	/**
+	 * Delete an observer
+	 */
 	public void observerDelete(Observer o){
 		this.deleteObserver(o);
 	}
 
+	/**
+	 * Get the logs
+	 */
 	public String getLog() {
 		
 		return this.connector.getTextLog(); 
 	}
 	
+	/**
+	 * Get the connection
+	 */
 	public boolean getConnected(){
 		return this.connector.getConnected();
 	}
 
+	/**
+	 * Get the port available
+	 */
 	public List<String> getPortAvailable() {
 		return this.portsAvailable;
 	}
 	
+	/**
+	 * Get the interior temperature
+	 */
 	public List<Double> getTempInt() {
 		return this.tempInt;
 	}
 	
+	/**
+	 * get the exterior temperature
+	 */
 	public List<Double> getTempExt() {
 		return this.tempExt;
 	}
 	
+	/**
+	 * Get the temperature of the module
+	 */
 	public List<Double> getTempModule() {
 		return this.tempModule;
 	}
 	
+	/**
+	 * Get the humidity
+	 */
 	public List<Double> getHumidity() {
 		return this.humidity;
 	}
@@ -232,7 +281,7 @@ public class Model extends Observable implements Imodel {
 		return this.ptRosee;
 	
 	/**
-	 * Boolean that show if the door is open or not
+	 * Show if the door is open or not
 	 */
 	}
 	
@@ -241,12 +290,15 @@ public class Model extends Observable implements Imodel {
 	}
 	
 	/**
-	 * 
+	 * Show if there is a risk of condensation or not
 	 */
 	public boolean condensation(){
 		return this.condensation;
 	}
 	
+	/**
+	 * Get the order choose by the user
+	 */
 	public int getConsigne(){
 		return this.consigne;
 	}
