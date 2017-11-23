@@ -6,10 +6,25 @@ import javax.swing.JTabbedPane;
 import org.contract.Icontroller;
 import org.contract.Imodel;
 
+
+/**
+ * Displays the graphical user interface
+ * 
+ * @author HOYEZ Alexis
+ *
+ */
+
 public class Frame extends JFrame{
 	private static final long serialVersionUID = 1L;
 	
 	  private JTabbedPane tabs;
+	  
+	  /**
+	   * constructor that displays tabs
+	   * 
+	   * @param model
+	   * @param controller
+	   */
 
 	public Frame(Imodel model, Icontroller controller){
 		

@@ -20,20 +20,29 @@ import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
+/**
+ * Class that displays the graphic containing the history of the values
+ * 
+ * @author HOYEZ Alexis
+ *
+ */
+
 public class Stats extends JPanel implements Observer {
 	private static final long serialVersionUID = 1L;
 	
 	private Imodel model;
-
 	private JFreeChart chart;
-	
 	private ChartPanel chartPanel;
-	
 	private XYDataset dataset;
-	
 	private List<Double> test = new ArrayList<Double>();
 	
 	final XYSeries series1 = new XYSeries("Température extérieur");
+	
+	/**
+	 * Constructor that starts the display
+	 * 
+	 * @param model
+	 */
 	
 	
 	public Stats(Imodel model) {
@@ -54,6 +63,10 @@ public class Stats extends JPanel implements Observer {
         this.add(chartPanel);
         
     }
+	
+	/**
+	 * Class that displays the graphic
+	 */
 	
 	public void paintComponent() {
 
@@ -146,6 +159,10 @@ public class Stats extends JPanel implements Observer {
         return chart;
         
     }
+    
+    /**
+     * Updates the graph for each action of the Arduino
+     */
 
 	public void update(Observable o, Object arg) {
 		series1.add(7.0, 20.0);

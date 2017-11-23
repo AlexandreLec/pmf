@@ -71,10 +71,12 @@ public class Model extends Observable implements Imodel {
 	public void readDatas(String datas){
 		
 		String[] data = datas.split("#");
+		String nomSession = System.getProperty("user.home");
 		System.out.println("size : "+tempModule.size());
 		if(tempModule.size()>size_limite){
 			System.out.println("Limite atteinte !");
-	        final String chemin = "C:/Users/hoyez/Desktop/histo.txt";
+			//String nomSession = System.getProperty("user.home");
+	        final String chemin = nomSession+"/Desktop/histo.txt";
 	        final File fichier =new File(chemin); 
 	        try {
 	            // Creation du fichier

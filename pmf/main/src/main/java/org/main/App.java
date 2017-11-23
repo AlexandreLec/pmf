@@ -5,7 +5,7 @@ import org.model.Model;
 import org.view.FridgeView;
 
 /**
- * Hello world!
+ * Main class
  *
  */
 public class App 
