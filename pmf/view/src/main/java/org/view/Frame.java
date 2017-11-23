@@ -1,14 +1,18 @@
 package org.view;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 
 import org.contract.Icontroller;
 import org.contract.Imodel;
 
-public class Frame extends JFrame{
+public class Frame extends JFrame implements Observer {
 	private static final long serialVersionUID = 1L;
-
+	
 	  private JTabbedPane tabs;
 	  
 	  private Imodel model;
@@ -46,17 +50,17 @@ public class Frame extends JFrame{
         this.getContentPane().add(tabs);
         this.setVisible(true);
 
-        
         //pop-ups d'alertes
         
-        if(this.model.openDoor() == true){
-        	
-        	
-        }
+        this.model.observerAdd(this);
         
-        if(this.model.condensation() == true){
-        	
-        	
-        }
+        
+	}
+
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		System.out.println("Boucle observable");
+		
+		
 	}
 }

@@ -11,12 +11,18 @@ import java.util.Observer;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
 import org.contract.Icontroller;
 import org.contract.Imodel;
 
+/**
+ * 
+ * @author  
+ * 
+ */
 public class Commandes extends JPanel implements ActionListener, Observer {
 	private static final long serialVersionUID = 1L;
 	
@@ -41,6 +47,11 @@ public class Commandes extends JPanel implements ActionListener, Observer {
 	
 	JPanel fr5 = new JPanel();
 
+	/**
+	 * 
+	 * @param model
+	 * @param controller
+	 */
 	public Commandes(Imodel model, Icontroller controller){
 		this.setLayout(new FlowLayout(FlowLayout.CENTER));
 		this.model = model;
@@ -109,6 +120,11 @@ public class Commandes extends JPanel implements ActionListener, Observer {
 		this.Temperature();
 		this.Humidite();
 		this.Rosee();
+    	
+    	
+    	System.out.println(String.valueOf(this.model.openDoor()));
+		this.checkAlert();
+		
 		System.out.println("update");
 	}
 
@@ -122,6 +138,20 @@ public class Commandes extends JPanel implements ActionListener, Observer {
 		}
 	}
 	
+	private void checkAlert(){
+		
+		if(this.model.openDoor()){
+        	
+        	JOptionPane.showMessageDialog(this, "La porte est ouverte");
+        	System.out.println("La porte est ouverte");
+        }
+        
+        if(this.model.condensation()){
+        	JOptionPane.showMessageDialog(this, "Risque de condensation");
+        	System.out.println("Risque de condensation");
+        }
+	}
+
 	public void sendConsigne(){
 		this.controller.setTemperature(Integer.parseInt(this.txt.getText()));
 	}
