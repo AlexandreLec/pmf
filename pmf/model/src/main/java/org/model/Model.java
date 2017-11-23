@@ -74,14 +74,12 @@ public class Model extends Observable implements Imodel {
 
 		if(data[6].compareTo("W") == 0){
 			this.openDoor = true;
-			System.out.println("warning");
 		}
 		else {
 			this.openDoor = false;
 		}
-		if(Double.parseDouble(data[4]) >= 80.00){
+		if(Double.parseDouble(data[4]) >= 50.00){
 			this.condensation = true;
-			System.out.println("warning");
 		}
 		else {
 			this.condensation = false;

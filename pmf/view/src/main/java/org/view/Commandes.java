@@ -1,6 +1,7 @@
 package org.view;
 
 import java.awt.Button;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
@@ -44,6 +45,7 @@ public class Commandes extends JPanel implements ActionListener, Observer {
 	private Label txt1 = new Label("Température actuelle : "+T);
 	private Label txt2 = new Label("Point de rosée : "+Pt_rosee);
 	private Label txt3 = new Label("Humidité : "+H);
+	private Label alert = new Label("/!\\ Attention, risque de condensation");
 	
 	JPanel fr5 = new JPanel();
 
@@ -62,6 +64,9 @@ public class Commandes extends JPanel implements ActionListener, Observer {
 		this.buildComSelector(this.model.getPortAvailable());
 		
 		this.add(listePorts);
+		
+		this.alert.setForeground(Color.RED);
+		this.alert.setVisible(false);
 		
         this.moins.addActionListener(this);
         this.moins.addActionListener(new ActionListener(){public void actionPerformed(ActionEvent e){Commandes.this.diminuer();}});
@@ -89,7 +94,7 @@ public class Commandes extends JPanel implements ActionListener, Observer {
         fr5.add(connect);
         fr5.add(Box.createVerticalStrut(10));
         fr5.add(disconnect);
-        fr5.add(Box.createVerticalStrut(30));
+        fr5.add(Box.createVerticalStrut(10));
         fr5.add(plus);
         fr5.add(Box.createVerticalStrut(10));
         fr5.add(txt);
@@ -104,6 +109,7 @@ public class Commandes extends JPanel implements ActionListener, Observer {
         fr5.add(Box.createVerticalStrut(10));
         fr5.add(txt3);
         this.add(fr5);
+        this.add(this.alert);
 
 		/**valeurs.setBorder(new TitledBorder("Valeurs "));
 	    valeurs.setLayout(new BoxLayout(valeurs, BoxLayout.Y_AXIS));
@@ -143,12 +149,13 @@ public class Commandes extends JPanel implements ActionListener, Observer {
 		if(this.model.openDoor()){
         	
         	JOptionPane.showMessageDialog(this, "La porte est ouverte");
-        	System.out.println("La porte est ouverte");
         }
         
         if(this.model.condensation()){
-        	JOptionPane.showMessageDialog(this, "Risque de condensation");
-        	System.out.println("Risque de condensation");
+        	this.alert.setVisible(true);
+        }
+        else {
+        	this.alert.setVisible(false);
         }
 	}
 
