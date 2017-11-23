@@ -35,6 +35,14 @@ public class Stats extends JPanel implements Observer {
 	
 	private List<Double> test = new ArrayList<Double>();
 	
+	final XYSeries series1 = new XYSeries("Température extérieur");
+	
+
+	
+	
+	
+	int i=0;
+	
 	public Stats(Imodel model) {
 		this.model = model;
 		this.model.observerAdd(this);
@@ -51,16 +59,18 @@ public class Stats extends JPanel implements Observer {
         this.chartPanel = new ChartPanel(chart);
         chartPanel.setPreferredSize(new java.awt.Dimension(750, 500));
         this.add(chartPanel);
+        SizeTemp=this.model.getTempInt().size();
         
     }
 	
 	public void paintComponent() {
-			final XYDataset dataset = createDataset();
-	        final JFreeChart chart = createChart(dataset);
-	        final ChartPanel chartPanel = new ChartPanel(chart);
-	        
+
+			dataset = createDataset();
+	        chart = createChart(dataset);
+	        chartPanel = new ChartPanel(chart);
+		
 	        chartPanel.setPreferredSize(new java.awt.Dimension(750, 500));
-	        this.add(chartPanel);
+	        this.add(chartPanel);  
 	}
     
     /**
@@ -68,16 +78,21 @@ public class Stats extends JPanel implements Observer {
      * 
      * @return a sample dataset.
      */
+	
+	
     private XYDataset createDataset() {
-        System.out.println("create");
         final XYSeries series1 = new XYSeries("Température extérieur");
         SizeTemp=this.model.getTempInt().size();
+
         
-        for(double i = 0.0 ; i < this.model.getTempInt().size() ; i++){
-	        double ValueX = this.model.getTempInt().get(SizeTemp-(int) i-1);
-	        series1.add(10.0-i, ValueX);
+        for(double i = 2.0 ; i < this.model.getTempInt().size() ; i++){
+	        double ValueX = this.model.getTempInt().get((int) i);
+	        series1.add(i, ValueX);
         }
-        /**XYSeries series2 = new XYSeries("Température intérieur");
+        
+
+        
+        XYSeries series2 = new XYSeries("Température intérieur");
         series2.add(1.0, 5.0);
         series2.add(2.0, 7.0);
         series2.add(3.0, 6.0);
@@ -96,10 +111,12 @@ public class Stats extends JPanel implements Observer {
         series3.add(7.0, 6.0);
         series3.add(8.0, 3.0);
         series3.add(9.0, 4.0);
-        series3.add(10.0, 9.0);*/
+        series3.add(10.0, 9.0);
 
         XYSeriesCollection dataset = new XYSeriesCollection();
         dataset.addSeries(series1);
+        dataset.addSeries(series2);
+        dataset.addSeries(series3);
         return dataset;
     }
     
@@ -111,6 +128,8 @@ public class Stats extends JPanel implements Observer {
      * @return a chart.
      */
     private JFreeChart createChart(final XYDataset dataset) {
+    	
+    	
         final JFreeChart chart = ChartFactory.createXYLineChart(
             "Graphique des températures",      // chart title
             "Temps (secondes)",                      // x axis label
@@ -145,14 +164,10 @@ public class Stats extends JPanel implements Observer {
     }
 
 	public void update(Observable o, Object arg) {
-
-		if(SizeTemp<this.model.getTempInt().size()){
-			this.removeAll();
-			//createChart(createDataset());
-			this.revalidate();
-
-		}
-		System.out.println("fritsh");
+		series1.add(7.0, 2.0);
+		createChart(createDataset());
+		this.removeAll();
+		this.paintComponent(); 
 	}
 
 }
