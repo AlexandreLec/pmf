@@ -42,6 +42,7 @@ public class Model extends Observable implements Imodel {
 	/**
 	 * Dew point
 	 */
+	
 	private double ptRosee;
 	
 	private boolean openDoor = false;
@@ -174,7 +175,9 @@ public class Model extends Observable implements Imodel {
 	public List<Double> getHumidity() {
 		return this.humidity;
 	}
-	
+	/**
+	 * Dew point calculation
+	 */
 	private void calculRosee(){
 		
 		double pointDeRosee;
@@ -186,16 +189,25 @@ public class Model extends Observable implements Imodel {
 		this.ptRosee = pointDeRosee;
 	}
 
+	/**
+	 * Get the dew point
+	 */
 	public double getRosee() {
 		
 		return this.ptRosee;
-		
+	
+	/**
+	 * Boolean that show if the door is open or not
+	 */
 	}
 	
 	public boolean openDoor(){
 		return this.openDoor;
 	}
 	
+	/**
+	 * 
+	 */
 	public boolean condensation(){
 		return this.condensation;
 	}
