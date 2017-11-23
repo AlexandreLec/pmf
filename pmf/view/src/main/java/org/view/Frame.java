@@ -10,15 +10,18 @@ public class Frame extends JFrame{
 	private static final long serialVersionUID = 1L;
 
 	  private JTabbedPane tabs;
+	  
+	  private Imodel model;
 
 	public Frame(Imodel model, Icontroller controller){
+		
+		this.model = model;
 		
 	    this.setLocation(500,300);
 	    this.setTitle("Pimp my Fridge");
 	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    this.setSize(800, 600);
 	    
-        
         
         //Création de plusieurs Panneau
 
@@ -43,5 +46,17 @@ public class Frame extends JFrame{
         this.getContentPane().add(tabs);
         this.setVisible(true);
 
+        
+        //pop-ups d'alertes
+        
+        if(this.model.openDoor() == true){
+        	
+        	
+        }
+        
+        if(this.model.condensation() == true){
+        	
+        	
+        }
 	}
 }
