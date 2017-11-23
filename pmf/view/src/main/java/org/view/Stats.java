@@ -93,19 +93,25 @@ public class Stats extends JPanel implements Observer {
 
         
         XYSeries series2 = new XYSeries("Température intérieur");
-        for(double j = 2.0 ; j < this.model.getTempInt().size() ; j++){
-            
-        	double ValueXinterieur = this.model.getTempInt().get((int) j);
-        	series2.add(j, ValueXinterieur);
-        }
+        series2.add(1.0, 5.0);
+        series2.add(2.0, 7.0);
+        series2.add(3.0, 6.0);
+        series2.add(4.0, 8.0);
+        series2.add(5.0, 4.0);
+        series2.add(6.0, 4.0);
+        series2.add(7.0, 2.0);
+        series2.add(8.0, 1.0);
+        series2.add(8.0, this.model.getTempInt().get(this.model.getTempInt().size()-1));
 
         XYSeries series3 = new XYSeries("Température du module");
-        for(double k = 2.0 ; k < this.model.getTempModule().get((int) k) ; k++){
-            
-        	double ValueXmodule = this.model.getTempModule().get((int) k);
-        	series3.add(k, ValueXmodule);
-        	
-        }
+        series3.add(3.0, 4.0);
+        series3.add(4.0, 3.0);
+        series3.add(5.0, 2.0);
+        series3.add(6.0, 3.0);
+        series3.add(7.0, 6.0);
+        series3.add(8.0, 3.0);
+        series3.add(9.0, 4.0);
+        series3.add(10.0, 9.0);
 
         XYSeriesCollection dataset = new XYSeriesCollection();
         dataset.addSeries(series1);
