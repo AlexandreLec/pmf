@@ -11,6 +11,7 @@ import java.util.Observer;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
@@ -93,6 +94,11 @@ public class Commandes extends JPanel implements ActionListener, Observer {
 		this.Temperature();
 		this.Humidite();
 		this.Rosee();
+    	
+    	
+    	System.out.println(String.valueOf(this.model.openDoor()));
+		this.checkAlert();
+		
 		System.out.println("update");
 	}
 
@@ -104,6 +110,20 @@ public class Commandes extends JPanel implements ActionListener, Observer {
 		else if(e.getSource().equals(this.disconnect)){
 			this.controller.disconnect();
 		}
+	}
+	
+	private void checkAlert(){
+		
+		if(this.model.openDoor()){
+        	
+        	JOptionPane.showMessageDialog(this, "La porte est ouverte");
+        	System.out.println("La porte est ouverte");
+        }
+        
+        if(this.model.condensation()){
+        	JOptionPane.showMessageDialog(this, "Risque de condensation");
+        	System.out.println("Risque de condensation");
+        }
 	}
 		
 	public void diminuer(){
