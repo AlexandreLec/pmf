@@ -131,9 +131,6 @@ public class Commandes extends JPanel implements ActionListener, Observer {
 		fr5.removeAll();
         valeur_temperature = Integer.toString(number);
         txt = new Label(valeur_temperature);
-		fr5.revalidate();
-		
-		this.controller.setTemperature(Integer.parseInt(valeur_temperature));
 		
 		afficher();
 	}
