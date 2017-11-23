@@ -37,20 +37,15 @@ public class Stats extends JPanel implements Observer {
 	
 	final XYSeries series1 = new XYSeries("Température extérieur");
 	
-
-	
-	
-	
-	int i=0;
 	
 	public Stats(Imodel model) {
 		this.model = model;
 		this.model.observerAdd(this);
 		
-		this.test.add(1.0);
-		this.test.add(2.0);
-		this.test.add(3.0);
-		this.test.add(4.0);
+		this.test.add(11.0);
+		this.test.add(12.0);
+		this.test.add(13.0);
+		this.test.add(14.0);
 		
 		this.paintComponent(); 
         
@@ -81,7 +76,7 @@ public class Stats extends JPanel implements Observer {
 	
 	
     private XYDataset createDataset() {
-        final XYSeries series1 = new XYSeries("Température extérieur");
+        final XYSeries series1 = new XYSeries("Température intérieur");
         SizeTemp=this.model.getTempInt().size();
 
         
@@ -92,19 +87,17 @@ public class Stats extends JPanel implements Observer {
         
 
         
-        XYSeries series2 = new XYSeries("Température intérieur");
-        for(double j = 1.0 ; j < this.model.getTempInt().size() ; j++){
+        XYSeries series2 = new XYSeries("Température extérieur");
+        for(double j = 1.0 ; j < this.model.getTempExt().size() ; j++){
             
-        	double ValueXinterieur = this.model.getTempInt().get((int) j);
-        	System.out.print("add int");
+        	double ValueXinterieur = this.model.getTempExt().get((int) j);
         	series2.add(j, ValueXinterieur);
         }
 
         XYSeries series3 = new XYSeries("Température du module");
-for(double k = 1.0 ; k < this.model.getTempModule().get((int) k) ; k++){
+        for(double k = 1.0 ; k < this.model.getTempModule().size() ; k++){
             
         	double ValueXmodule = this.model.getTempModule().get((int) k);
-        	System.out.print("add module");
         	series3.add(k, ValueXmodule);
         	
         }
@@ -160,7 +153,7 @@ for(double k = 1.0 ; k < this.model.getTempModule().get((int) k) ; k++){
     }
 
 	public void update(Observable o, Object arg) {
-		series1.add(7.0, 2.0);
+		series1.add(7.0, 20.0);
 		createChart(createDataset());
 		this.removeAll();
 		this.paintComponent(); 
