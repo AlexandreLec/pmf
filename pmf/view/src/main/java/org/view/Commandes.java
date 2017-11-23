@@ -19,9 +19,9 @@ import org.contract.Icontroller;
 import org.contract.Imodel;
 
 /**
- * Panel commands
- * @author  Alexis
- *
+ * 
+ * @author  
+ * 
  */
 public class Commandes extends JPanel implements ActionListener, Observer {
 	private static final long serialVersionUID = 1L;
