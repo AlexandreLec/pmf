@@ -20,22 +20,29 @@ import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
+/**
+ * Class that displays the graphic containing the history of the values
+ * 
+ * @author HOYEZ Alexis
+ *
+ */
+
 public class Stats extends JPanel implements Observer {
 	private static final long serialVersionUID = 1L;
 	
 	private Imodel model;
-
 	private JFreeChart chart;
-	
 	private ChartPanel chartPanel;
-	
 	private XYDataset dataset;
-	
-	private int SizeTemp;
-	
 	private List<Double> test = new ArrayList<Double>();
 	
 	final XYSeries series1 = new XYSeries("Température extérieur");
+	
+	/**
+	 * Constructor that starts the display
+	 * 
+	 * @param model
+	 */
 	
 	
 	public Stats(Imodel model) {
@@ -54,9 +61,12 @@ public class Stats extends JPanel implements Observer {
         this.chartPanel = new ChartPanel(chart);
         chartPanel.setPreferredSize(new java.awt.Dimension(750, 500));
         this.add(chartPanel);
-        SizeTemp=this.model.getTempInt().size();
         
     }
+	
+	/**
+	 * Class that displays the graphic
+	 */
 	
 	public void paintComponent() {
 
@@ -77,8 +87,6 @@ public class Stats extends JPanel implements Observer {
 	
     private XYDataset createDataset() {
         final XYSeries series1 = new XYSeries("Température intérieur");
-        SizeTemp=this.model.getTempInt().size();
-
         
         for(double i = 2.0 ; i < this.model.getTempInt().size() ; i++){
 	        double ValueX = this.model.getTempInt().get((int) i);
@@ -88,14 +96,14 @@ public class Stats extends JPanel implements Observer {
 
         
         XYSeries series2 = new XYSeries("Température extérieur");
-        for(double j = 1.0 ; j < this.model.getTempExt().size() ; j++){
+        for(double j = 2.0 ; j < this.model.getTempExt().size() ; j++){
             
         	double ValueXinterieur = this.model.getTempExt().get((int) j);
         	series2.add(j, ValueXinterieur);
         }
 
         XYSeries series3 = new XYSeries("Température du module");
-        for(double k = 1.0 ; k < this.model.getTempModule().size() ; k++){
+        for(double k = 2.0 ; k < this.model.getTempModule().size() ; k++){
             
         	double ValueXmodule = this.model.getTempModule().get((int) k);
         	series3.add(k, ValueXmodule);
@@ -151,6 +159,10 @@ public class Stats extends JPanel implements Observer {
         return chart;
         
     }
+    
+    /**
+     * Updates the graph for each action of the Arduino
+     */
 
 	public void update(Observable o, Object arg) {
 		series1.add(7.0, 20.0);

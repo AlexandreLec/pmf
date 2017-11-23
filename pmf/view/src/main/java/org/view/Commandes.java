@@ -20,6 +20,7 @@ import org.contract.Icontroller;
 import org.contract.Imodel;
 
 /**
+ * Command tab that displays buttons and values 
  * 
  * @author  
  * 
@@ -50,6 +51,7 @@ public class Commandes extends JPanel implements ActionListener, Observer {
 	JPanel fr5 = new JPanel();
 
 	/**
+	 * Constructor
 	 * 
 	 * @param model
 	 * @param controller
@@ -84,6 +86,10 @@ public class Commandes extends JPanel implements ActionListener, Observer {
 
         afficher();
 	}
+	
+	/**
+	 * Panel containing the different components
+	 */
 	
 	public void afficher(){
 		this.removeAll();
@@ -121,18 +127,23 @@ public class Commandes extends JPanel implements ActionListener, Observer {
 	    valeurs.add(txt3);
 	    this.add(valeurs);*/
 	}
+	
+	/**
+	 * Method that reacts with the actions of the Arduino
+	 */
 
 	public void update(Observable o, Object arg) {
 		this.Temperature();
 		this.Humidite();
 		this.Rosee();
     	
-    	
     	System.out.println(String.valueOf(this.model.openDoor()));
 		this.checkAlert();
-		
-		System.out.println("update");
 	}
+	
+	/**
+	 * Used to connect and disconnect ports
+	 */
 
 	public void actionPerformed(ActionEvent e) {
 		
@@ -143,6 +154,10 @@ public class Commandes extends JPanel implements ActionListener, Observer {
 			this.controller.disconnect();
 		}
 	}
+	
+	/**
+	 * View Alert Messages
+	 */
 	
 	private void checkAlert(){
 		
@@ -158,10 +173,18 @@ public class Commandes extends JPanel implements ActionListener, Observer {
         	this.alert.setVisible(false);
         }
 	}
+	
+	/**
+	 * Send temperature instruction 
+	 */
 
 	public void sendConsigne(){
 		this.controller.setTemperature(Integer.parseInt(this.txt.getText()));
 	}
+	
+	/**
+	 * decrease instuction
+	 */
 		
 	public void diminuer(){
 		number--;
@@ -172,6 +195,10 @@ public class Commandes extends JPanel implements ActionListener, Observer {
 		afficher();
 	}
 	
+	/**
+	 * Display the temperature
+	 */
+	
 	public void Temperature(){
 		T= Double.toString(this.model.getTemperature());
 		fr5.removeAll();
@@ -180,6 +207,10 @@ public class Commandes extends JPanel implements ActionListener, Observer {
 		
 		afficher();
 	}
+	
+	/**
+	 * Display the dew point
+	 */
 	
 	public void Rosee(){
 		Pt_rosee= Double.toString(this.model.getRosee());
@@ -190,6 +221,10 @@ public class Commandes extends JPanel implements ActionListener, Observer {
 		afficher();
 	}
 	
+	/**
+	 * Display humidity
+	 */
+	
 	public void Humidite(){
 		H= Double.toString(this.model.getHumidityTx());
 		fr5.removeAll();
@@ -198,6 +233,10 @@ public class Commandes extends JPanel implements ActionListener, Observer {
 		
 		afficher();
 	}
+	
+	/**
+	 * Increase instruction
+	 */
 	
 	public void augmenter(){
 		number++;
@@ -208,6 +247,11 @@ public class Commandes extends JPanel implements ActionListener, Observer {
 		
 		afficher();
 	}
+	
+	/**
+	 * Display list of available ports
+	 * @param portAvailable
+	 */
 	
 	private void buildComSelector(List<String> portAvailable){
 		

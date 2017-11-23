@@ -1,25 +1,32 @@
 package org.view;
 
-import java.util.Observable;
-import java.util.Observer;
-
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 
 import org.contract.Icontroller;
 import org.contract.Imodel;
 
-public class Frame extends JFrame implements Observer {
+
+/**
+ * Displays the graphical user interface
+ * 
+ * @author HOYEZ Alexis
+ *
+ */
+
+public class Frame extends JFrame{
 	private static final long serialVersionUID = 1L;
 	
 	  private JTabbedPane tabs;
 	  
-	  private Imodel model;
+	  /**
+	   * constructor that displays tabs
+	   * 
+	   * @param model
+	   * @param controller
+	   */
 
 	public Frame(Imodel model, Icontroller controller){
-		
-		this.model = model;
 		
 	    this.setLocation(500,300);
 	    this.setTitle("Pimp my Fridge");
@@ -49,18 +56,7 @@ public class Frame extends JFrame implements Observer {
 
         this.getContentPane().add(tabs);
         this.setVisible(true);
-
-        //pop-ups d'alertes
-        
-        this.model.observerAdd(this);
-        
         
 	}
 
-	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
-		System.out.println("Boucle observable");
-		
-		
-	}
 }
