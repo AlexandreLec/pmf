@@ -172,21 +172,18 @@ public class Commandes extends JPanel implements ActionListener, Observer {
 	
 	/**
 	 * Send temperature instruction 
-	 */
+	*/
 	public void sendConsigne(){
 		this.controller.setTemperature(Integer.parseInt(this.txt.getText()));
 	}
 	
 	/**
 	 * decrease instuction
-	 */	
+	*/
 	public void diminuer(){
 		number--;
-		fr5.removeAll();
         valeur_temperature = Integer.toString(number);
-        txt = new Label(valeur_temperature);
-		
-		afficher();
+        txt.setText(valeur_temperature);
 	}
 	
 	/**
@@ -194,11 +191,7 @@ public class Commandes extends JPanel implements ActionListener, Observer {
 	 */	
 	public void Temperature(){
 		T= Double.toString(this.model.getTemperature());
-		fr5.removeAll();
-		txt1 = new Label("Température actuelle : "+T);
-		fr5.revalidate();
-		
-		afficher();
+		txt1.setText("Température actuelle : "+T);
 	}
 	
 	/**
@@ -206,11 +199,7 @@ public class Commandes extends JPanel implements ActionListener, Observer {
 	 */
 	public void Rosee(){
 		Pt_rosee= Double.toString(this.model.getRosee());
-		fr5.removeAll();
-		txt2 = new Label("Point de rosée : "+Pt_rosee);
-		fr5.revalidate();
-		
-		afficher();
+		txt2.setText("Point de rosée : "+Pt_rosee);
 	}
 	
 	/**
@@ -218,11 +207,8 @@ public class Commandes extends JPanel implements ActionListener, Observer {
 	 */
 	public void Humidite(){
 		H= Double.toString(this.model.getHumidityTx());
-		fr5.removeAll();
-		txt3 = new Label("Humidité : "+H);
+		txt3.setText("Humidité : "+H);
 		fr5.revalidate();
-		
-		afficher();
 	}
 	
 	/**
@@ -230,12 +216,8 @@ public class Commandes extends JPanel implements ActionListener, Observer {
 	 */
 	public void augmenter(){
 		number++;
-		fr5.removeAll();
         valeur_temperature = Integer.toString(number);
-        txt = new Label(valeur_temperature);
-		fr5.revalidate();
-		
-		afficher();
+        txt.setText(valeur_temperature);
 	}
 	
 	/**
