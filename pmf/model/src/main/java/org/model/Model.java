@@ -39,7 +39,14 @@ public class Model extends Observable implements Imodel {
 	 */
 	private List<Double> humidity = new ArrayList<Double>();
 	
+	/**
+	 * Dew point
+	 */
 	private double ptRosee;
+	
+	private boolean openDoor = false;
+	
+	private boolean condensation = false;
 
 	public Model(){
 		
@@ -61,7 +68,20 @@ public class Model extends Observable implements Imodel {
 		this.tempInt.add(new Double(data[3]));
 		this.humidity.add(new Double(data[4]));
 		
-		System.out.println(data[5]);
+		if(data[6].compareTo("W") == 0){
+			this.openDoor = true;
+			System.out.println("warning");
+		}
+		else {
+			this.openDoor = false;
+		}
+		if(Integer.parseInt(data[4]) >= 80.00){
+			this.condensation = true;
+			System.out.println("warning");
+		}
+		else {
+			this.condensation = false;
+		}
 		
 		this.calculRosee();
 		
@@ -166,6 +186,14 @@ public class Model extends Observable implements Imodel {
 		
 		return this.ptRosee;
 		
+	}
+	
+	public boolean openDoor(){
+		return this.openDoor;
+	}
+	
+	public boolean condensation(){
+		return this.condensation;
 	}
 	
 }

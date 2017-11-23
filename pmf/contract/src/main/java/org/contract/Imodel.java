@@ -30,6 +30,10 @@ public interface Imodel {
 	public List<Double> getTempModule();
 	
 	public List<Double> getHumidity();
+	
+	public boolean condensation();
+	
+	public boolean openDoor();
 
 	void observerAdd(Observer o);
 
