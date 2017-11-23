@@ -1,5 +1,8 @@
 package org.model;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -46,6 +49,9 @@ public class Model extends Observable implements Imodel {
 	private boolean condensation = false;
 	
 	private int consigne;
+	
+	private int size_limite=30;
+
 
 	/**
 	 * connects to the port
@@ -68,14 +74,41 @@ public class Model extends Observable implements Imodel {
 	 */
 	public void readDatas(String datas){
 		
-		System.out.println(datas);
-		
 		String[] data = datas.split("#");
-		
-		this.tempModule.add(new Double(data[1]));
-		this.tempExt.add(new Double(data[2]));
-		this.tempInt.add(new Double(data[3]));
-		this.humidity.add(new Double(data[4]));
+		System.out.println("size : "+tempModule.size());
+		if(tempModule.size()>size_limite){
+			System.out.println("Limite atteinte !");
+	        final String chemin = "C:/Users/hoyez/Desktop/histo.txt";
+	        final File fichier =new File(chemin); 
+	        try {
+	            // Creation du fichier
+	            fichier .createNewFile();
+	            // creation d'un writer (un écrivain)
+	            final FileWriter writer = new FileWriter(fichier);
+	            try {
+	            	for(int i=0;i<30;i++){
+	            		writer.write("tempModule : "+tempModule.get(i)+"\r\n");
+	            		writer.write("tempExt : "+tempExt.get(i)+"\r\n");
+	            		writer.write("tempInt : "+tempInt.get(i)+"\r\n");
+	                }
+	            } finally {
+	                // quoiqu'il arrive, on ferme le fichier
+	                writer.close();
+	            }
+	        } catch (Exception e) {
+	            System.out.println("Impossible de creer le fichier");
+	        }
+	        tempModule.clear();
+	        tempExt.clear();
+	        tempInt.clear();
+		}
+		else{
+			this.tempModule.add(new Double(data[1]));
+			this.tempExt.add(new Double(data[2]));
+			this.tempInt.add(new Double(data[3]));
+			this.humidity.add(new Double(data[4]));
+		}
+
 
 		if(data[6].compareTo("W") == 0){
 			this.openDoor = true;
